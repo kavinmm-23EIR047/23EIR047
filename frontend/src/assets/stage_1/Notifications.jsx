@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 
-const NOTIFICATIONS_URL = 'http://4.224.186.213/evaluation-service/notifications'
+const NOTIFICATIONS_URL = import.meta.env.VITE_API_URL || 'http://4.224.186.213/evaluation-service/notifications'
+const AUTH_TOKEN = import.meta.env.VITE_AUTH_TOKEN
 
-function Top10Notifications() {
+function Notifications() {
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -13,7 +14,18 @@ function Top10Notifications() {
     async function loadNotifications() {
       try {
         setLoading(true)
-        const response = await fetch(NOTIFICATIONS_URL)
+        const headers = new Headers({
+          Accept: 'application/json',
+        })
+
+        if (AUTH_TOKEN?.trim()) {
+          headers.set('Authorization', `Bearer ${AUTH_TOKEN.trim()}`)
+        }
+
+        const response = await fetch(NOTIFICATIONS_URL, {
+          headers,
+        })
+
         if (!response.ok) {
           throw new Error(`Fetch failed: ${response.status} ${response.statusText}`)
         }
@@ -49,10 +61,10 @@ function Top10Notifications() {
   }, [])
 
   return (
-    <section id="top10-notifications">
-      <h2>Top 10 Notifications</h2>
+    <section id="notifications">
+      <h2>Notifications</h2>
 
-      {loading && <p>Loading top 10 notification data...</p>}
+      {loading && <p>Loading notifications...</p>}
       {error && <p className="error">Error: {error}</p>}
 
       {!loading && !error && items.length === 0 && (
@@ -78,4 +90,6 @@ function Top10Notifications() {
   )
 }
 
-export default Top10Notifications
+export default Notifications
+
+
