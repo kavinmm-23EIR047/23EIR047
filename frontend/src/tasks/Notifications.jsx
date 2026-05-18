@@ -74,7 +74,7 @@ function Notifications() {
       {!loading && !error && items.length > 0 && (
         <ol>
           {items.map((item, index) => {
-            const title = item.title ?? item.message ?? item.name ?? `Notification ${index + 1}`
+            const title = item.type ?? item.message ?? item.name ?? `Notification ${index + 1}`
             const detail = item.detail ?? item.description ?? item.message ?? null
             return (
               <li key={item.id ?? `${index}-${title}`}>

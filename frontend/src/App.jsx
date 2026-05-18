@@ -1,4 +1,4 @@
-import Notifications from './tasks/Notifications.js'
+import Notifications from './tasks/Notifications.jsx'
 import './App.css'
 
 function App() {
