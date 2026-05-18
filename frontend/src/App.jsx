@@ -1,4 +1,4 @@
-import Notifications from './stage_1/Notifications.jsx'
+import Notifications from './tasks/Notifications.js'
 import './App.css'
 
 function App() {
